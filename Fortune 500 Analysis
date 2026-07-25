@@ -1,0 +1,31 @@
+-- Which companies have Technology companies have healthcare benefits and at least 10 weeks of maternity leave? --
+
+SELECT company_name
+FROM fortune_companies
+WHERE industry = 'Technology'
+AND healthcare_benefits = 1 
+AND maternity_leave_weeks >= 10;
+
+-- What is the average revenue for companies in the Technology industry? --
+
+SELECT AVG(revenue) as technology_average_revenue
+FROM fortune_companies
+WHERE industry = 'Technology';
+
+-- Assign all the companies based on how friendly, acceptable or abysmal they based on maternity leave. --
+
+SELECT company_name,
+CASE
+WHEN maternity_leave_weeks >= 12 THEN 'Mother Friendly'
+WHEN maternity_leave_weeks >= 8 THEN 'Acceptable'
+ELSE 'Abysmal'
+END AS mother_friendliness
+FROM fortune_companies;
+
+-- Which industries have at least an average of 15 days of PTO? -- 
+
+SELECT industry,
+ROUND(AVG(paid_time_off_days),0) AS pto
+FROM fortune_companies
+GROUP BY industry
+HAVING pto >= 15;
